@@ -14,9 +14,15 @@ driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.get(url)
 
 page = urllib.request.urlopen(url)
-soup = BeautifulSoup(page, "html")
+soup = BeautifulSoup(page, "html.parser")
 
+driver.quit()
 
+product_prices = soup.find_all("span", class_="linePrice")
+tidy_prices = []
+for price in product_prices:
+    tidy_prices.append(price.get_text())
 
-print(soup)
+print(tidy_prices)
+
 print('End Script...')
