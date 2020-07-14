@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib.request
 from selenium import webdriver
-from chromedriver_py import binary_path
 from webdriver_manager.chrome import ChromeDriverManager
 
 print('Running Script...')
