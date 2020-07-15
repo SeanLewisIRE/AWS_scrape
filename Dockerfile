@@ -1,4 +1,4 @@
-FROM lambci/lambda:python3.8.3
+FROM lambci/lambda:python3.8
 MAINTAINER tech@21buttons.com
 
 USER root
