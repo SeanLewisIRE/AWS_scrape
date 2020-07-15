@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
+import chromedriver_binary
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from s3interface import *
 
 print('Running Script...')
 
@@ -26,7 +28,7 @@ def scrape_page():
 def scraper():
     """Initiates scraper, iterates over 9 pages"""
     scrape_page()
-    for pages in range(9):
+    for pages in range(5):
         scrape_page()
         next_button = driver.find_element_by_link_text("next")
         next_button.click()
@@ -34,8 +36,7 @@ def scraper():
 
 #Call scraper
 scraper()
-
-print(tidy_prices)
+putS3(tidy_prices)
 
 print('End Script...')
 

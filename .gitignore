@@ -1,2 +1,4 @@
 AWS_scrape_venv
 .vscode
+credentials.py
+__pycache__
