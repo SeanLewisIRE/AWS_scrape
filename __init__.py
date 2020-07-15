@@ -12,11 +12,12 @@ start_url = "https://www.tesco.ie/groceries/product/browse/default.aspx?N=429495
 
 
 # chrome session
-driver = webdriver.Chrome(ChromeDriverManager().install())
 
-page = driver.get(start_url)
 
 tidy_prices = []
+driver = webdriver.Chrome(ChromeDriverManager().install())
+driver.get(start_url)
+soup = BeautifulSoup(driver.page_source, 'html.parser')
 
 def scrape_page():
     product_prices = soup.find_all("span", class_="linePrice")
@@ -24,13 +25,15 @@ def scrape_page():
     for price in product_prices:
         tidy_prices.append(price.get_text())
 
-for pages in range(10):
+def scraper():
     scrape_page()
-    next_button = driver.find_element_by_link_text("next")
-    next_button.click()
+    for pages in range(9):
+        scrape_page()
+        next_button = driver.find_element_by_link_text("next")
+        next_button.click()
+    driver.quit()
 
-
-driver.quit()
+scraper()
 
 print(tidy_prices)
 
