@@ -21,7 +21,7 @@ docker-build:
 	docker-compose build
  
 docker-run:
-	docker-compose run lambda __init__.py
+	docker-compose run lambda src/app.lambda_handler
  
 build-lambda-package: clean fetch-dependencies
 	mkdir build

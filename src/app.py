@@ -35,11 +35,10 @@ def lambda_handler(event, context):
     chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
     chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
 
-    # chrome_options.binary_location = os.getcwd() + "/bin/headless-chromium"
+    chrome_options.binary_location = os.getcwd() + "/bin/headless-chromium"
     """ ^ line tells Lambda where to find the headless Chrome binary file"""
 
-    driver = webdriver.Chrome(ChromeDriverManager().install(
-    ), options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(start_url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -50,7 +49,7 @@ def lambda_handler(event, context):
             tidy_prices.append(price.get_text())
 
     def scraper():
-        """Initiates scraper, iterates over 9 pages"""
+        """Initiates scraper, iterates over 5 pages"""
         scrape_page()
         for pages in range(5):
             scrape_page()
