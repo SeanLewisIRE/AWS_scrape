@@ -4,6 +4,12 @@ version: '3'
 services:
   lambda:
     build: .
+    Properties:
+      CodeUri: lambda/
+      Handler: app.lambda_handler
+      Runtime: python3.7
     environment:
+      PYTHONPATH: /var/task/src:/var/task/lib
+      PATH: /var/task/bin
     volumes:
       - ./src/:/var/task/src/

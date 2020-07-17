@@ -12,6 +12,16 @@ from s3interface import *
 def lambda_handler(event, context):
     print('Running Script...')
 
+    buildIfmissing("/tmp")
+    buildIfmissing("/tmp/bin")
+    buildIfmissing("/tmp/cache-dir")
+    buildIfmissing("/tmp/user-data")
+    buildIfmissing("/tmp/data-path")
+    shutil.copy2(os.getcwd() + "/tmp/bin/headless-chromium", "/tmp/bin/headless-chromium")
+    shutil.copy2(os.getcwd() + "/tmp/bin/chromedriver", "/tmp/bin/chromedriver")
+    os.chmod("/tmp/bin/headless-chromium", 0o775)
+    os.chmod("/tmp/bin/chromedriver", 0o775)
+
     #Starting URL
     start_url = "https://www.tesco.ie/groceries/product/browse/default.aspx?N=4294954026&Ne=4294954028"
 
@@ -36,11 +46,11 @@ def lambda_handler(event, context):
     chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
     chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
 
-    chrome_options.binary_location = os.getcwd() + "/bin/headless-chromium"
+    # chrome_options.binary_location = os.getcwd() + "/bin/headless-chromium"
     """ ^ line tells Lambda where to find the headless Chrome binary file"""
 
     # chrome_type=ChromeType.CHROMIUM).install(),
-    driver = webdriver.Chrome(executable_path=os.getcwd() + r"/chromedriver", options=chrome_options)
+    driver = webdriver.Chrome(executable_path="/tmp/bin/chromedriver"), options=chrome_options)
     driver.get(start_url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -51,7 +61,7 @@ def lambda_handler(event, context):
             tidy_prices.append(price.get_text())
 
     def scraper():
-        """Initiates scraper, iterates over 5 pages"""
+        """Initiates scraper, iterates over 9 pages"""
         scrape_page()
         for pages in range(5):
             scrape_page()
