@@ -1,4 +1,4 @@
-FROM lambci/lambda:python3.8
+FROM lambci/lambda:python3.6
 
 USER root
 

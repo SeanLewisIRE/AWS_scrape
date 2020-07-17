@@ -1,0 +1,4 @@
+AWS_scrape_venv/
+.git/
+__pycache__
+.DS_Store

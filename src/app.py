@@ -5,7 +5,6 @@ import chromedriver_binary
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-# from webdriver_manager.utils import ChromeType
 from s3interface import *
 
 
@@ -46,11 +45,10 @@ def lambda_handler(event, context):
     chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
     chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
 
-    # chrome_options.binary_location = os.getcwd() + "/bin/headless-chromium"
+    chrome_options.binary_location = os.getcwd() + "/bin/headless-chromium"
     """ ^ line tells Lambda where to find the headless Chrome binary file"""
-
-    # chrome_type=ChromeType.CHROMIUM).install(),
-    driver = webdriver.Chrome(executable_path="/tmp/bin/chromedriver"), options=chrome_options)
+   
+   driver = webdriver.Chrome(options=chrome_options)
     driver.get(start_url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
