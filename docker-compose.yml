@@ -5,9 +5,5 @@ services:
   lambda:
     build: .
     environment:
-      - PYTHONPATH=/var/task/src:/var/task/lib
-      - PATH=/var/task/bin
-      # - PYTHONPATH=AWS_scrape_venv/bin/python
-      # - PATH=AWS_scrape_venv/bin/
     volumes:
       - ./src/:/var/task/src/
